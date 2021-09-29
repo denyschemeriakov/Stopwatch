@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Subject, map, bufferCount, filter,
 } from 'rxjs';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const Stopwatch: React.FC = () => {
   const [timeInSeconds, setTimeInSeconds] = useState<number>(0);
@@ -72,13 +71,15 @@ const Stopwatch: React.FC = () => {
   };
 
   const handleResetButton = () => {
-    clearInterval(intervalId);
-    setTimeInSeconds(0);
-    const interval: any = setInterval(() => {
-      setTimeInSeconds((previousState: number) => previousState + 1);
-    }, 1000);
+    if (running) {
+      clearInterval(intervalId);
+      setTimeInSeconds(0);
+      const interval: any = setInterval(() => {
+        setTimeInSeconds((previousState: number) => previousState + 1);
+      }, 1000);
 
-    setIntervalId(interval);
+      setIntervalId(interval);
+    }
   };
 
   return (
